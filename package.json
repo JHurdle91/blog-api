@@ -1,0 +1,32 @@
+{
+  "name": "blog-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "ejs-lint": "./node_modules/ejs-lint/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JHurdle91/blog-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JHurdle91/blog-api/issues"
+  },
+  "homepage": "https://github.com/JHurdle91/blog-api#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "luxon": "^2.0.1",
+    "mongoose": "^5.13.5"
+  },
+  "devDependencies": {
+    "ejs-lint": "^1.2.1",
+    "eslint": "^7.32.0",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2"
+  }
+}

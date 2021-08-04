@@ -1,11 +1,10 @@
 {
   "name": "blog-api",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "ejs-lint": "./node_modules/ejs-lint/cli.js"
+    "start": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +18,12 @@
   "homepage": "https://github.com/JHurdle91/blog-api#readme",
   "description": "",
   "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "helmet": "^4.6.0",
     "luxon": "^2.0.1",
     "mongoose": "^5.13.5"
   },

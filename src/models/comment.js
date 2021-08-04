@@ -1,21 +1,19 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const { DateTime } = require("luxon");
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var CommentSchema = new Schema({
+const CommentSchema = new Schema({
   text: { type: String, required: true },
   timestamp: { type: Date },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   user: { type: Schema.Types.ObjectId, ref: "Post", required: true },
 });
 
-// Virtual for comment's URL
-CommentSchema.virtual("url").get(function () {
+CommentSchema.virtual("url").get(() => {
   return "/comments/" + this._id;
 });
 
-// Virtual for formatted timestamp
 CommentSchema.virtual("timestamp_formatted").get(() => {
   return this.timestamp
     ? DateTime.fromJSDate(this.timestamp).toLocaleString(
@@ -24,5 +22,4 @@ CommentSchema.virtual("timestamp_formatted").get(() => {
     : "";
 });
 
-// Export model
 module.exports = mongoose.model("Comment", CommentSchema);

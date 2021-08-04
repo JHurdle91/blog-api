@@ -1,9 +1,9 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const { DateTime } = require("luxon");
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var PostSchema = new Schema({
+const PostSchema = new Schema({
   title: { type: String, required: true },
   text: { type: String, required: true },
   published: { type: Boolean, required: true },
@@ -11,12 +11,10 @@ var PostSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
-// Virtual for post's URL
-PostSchema.virtual("url").get(function () {
+PostSchema.virtual("url").get(() => {
   return "/posts/" + this._id;
 });
 
-// Virtual for formatted timestamp
 PostSchema.virtual("timestamp_formatted").get(() => {
   return this.timestamp
     ? DateTime.fromJSDate(this.timestamp).toLocaleString(
@@ -25,5 +23,4 @@ PostSchema.virtual("timestamp_formatted").get(() => {
     : "";
 });
 
-// Export model
 module.exports = mongoose.model("Post", PostSchema);

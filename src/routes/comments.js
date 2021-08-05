@@ -1,17 +1,17 @@
 const express = require("express");
-const controller = require("../controllers/users");
+const controller = require("../controllers/comments");
 
 const router = express.Router();
 
 const CREATE = "/create";
 router.post(CREATE, controller.create.post);
 
-router.get("/:id", controller.id.get);
+router.get("/:commentId", controller.id.get);
 
-const UPDATE = "/:id/update";
+const UPDATE = "/:commentId/update";
 router.post(UPDATE, controller.update.post);
 
-const DELETE = "/:id/delete";
+const DELETE = "/:commentId/delete";
 const { destroy } = controller;
 router.post(DELETE, destroy.post);
 

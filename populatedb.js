@@ -10,6 +10,7 @@ var Post = require("./src/models/post");
 var Comment = require("./src/models/comment");
 
 var async = require("async");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 var mongoose = require("mongoose");
@@ -24,26 +25,29 @@ var posts = [];
 var comments = [];
 
 function userCreate(username, password, callback) {
-  userDetail = {
-    username,
-    password,
-  };
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) return next(err);
 
-  var user = new User(userDetail);
+    const userDetail = {
+      username,
+      password: hashedPassword,
+    };
 
-  user.save((err) => {
-    if (err) {
-      callback(err, null);
-      return;
-    }
-    console.log("New User: " + user);
-    users.push(user);
-    callback(null, user);
+    var user = new User(userDetail);
+    user.save((err) => {
+      if (err) {
+        callback(err, null);
+        return;
+      }
+      console.log("New User: " + user);
+      users.push(user);
+      callback(null, user);
+    });
   });
 }
 
 function postCreate(title, text, published, timestamp, user, callback) {
-  postDetail = {
+  const postDetail = {
     title,
     text,
     published,
@@ -65,7 +69,7 @@ function postCreate(title, text, published, timestamp, user, callback) {
 }
 
 function commentCreate(text, timestamp, user, post, callback) {
-  commentDetail = {
+  const commentDetail = {
     text,
     timestamp,
     user,

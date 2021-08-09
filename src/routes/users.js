@@ -3,6 +3,8 @@ const controller = require("../controllers/users");
 
 const router = express.Router();
 
+router.get("/", controller.index.get);
+
 const CREATE = "/create";
 router.post(CREATE, controller.create.post);
 

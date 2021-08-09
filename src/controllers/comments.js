@@ -1,3 +1,9 @@
+exports.index = {
+  get: (req, res) => {
+    res.send("Not implemented: send user list");
+  },
+};
+
 exports.create = {
   post: (req, res) => {
     res.send("Not implemented: add comment to db");

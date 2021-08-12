@@ -3,7 +3,7 @@ var Post = require("../models/post");
 exports.index = {
   get: (req, res) => {
     /* send list of all posts */
-    Post.find(callback).exec((err, list_posts) => {
+    Post.find().exec((err, list_posts) => {
       if (err) return next(err);
       res.json(list_posts);
     });

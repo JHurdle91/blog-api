@@ -1,7 +1,8 @@
 var Post = require("../models/post");
+var User = require("../models/user");
 
 exports.index = {
-  get: (req, res) => {
+  get: (req, res, next) => {
     /* send list of all posts */
     Post.find().exec((err, list_posts) => {
       if (err) return next(err);
@@ -17,8 +18,14 @@ exports.create = {
 };
 
 exports.id = {
-  get: (req, res) => {
-    res.send("Not implemented: send post json");
+  get: (req, res, next) => {
+    /* send post */
+    Post.findById(req.params.id)
+      .populate("user")
+      .exec((err, post) => {
+        if (err) return next(err);
+        res.json(post);
+      });
   },
 };
 

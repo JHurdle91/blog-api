@@ -1,6 +1,14 @@
+var Comment = require("../models/comment");
+
 exports.index = {
-  get: (req, res) => {
-    res.send("Not implemented: send user list");
+  get: (req, res, next) => {
+    /* send list of comments */
+    Comment.find({ post: req.postId })
+      .populate("user")
+      .exec((err, list_comments) => {
+        if (err) return next(err);
+        res.json(list_comments);
+      });
   },
 };
 

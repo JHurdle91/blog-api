@@ -33,9 +33,15 @@ app.use(
   })
 );
 
-app.use("/", routes.index);
+app.use("/posts/:id", (req, res, next) => {
+  req.postId = req.params.id;
+  next();
+});
+
+app.use("/posts/:id/comments", routes.comments);
 app.use("/posts", routes.posts);
 app.use("/users", routes.users);
+app.use("/", routes.index);
 
 const { PORT } = process.env;
 app.listen(PORT, () => {

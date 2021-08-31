@@ -10,10 +10,6 @@ const CommentSchema = new Schema({
   post: { type: Schema.Types.ObjectId, ref: "Post", required: true },
 });
 
-CommentSchema.virtual("url").get(() => {
-  return "/comments/" + this._id;
-});
-
 CommentSchema.virtual("timestamp_formatted").get(() => {
   return this.timestamp
     ? DateTime.fromJSDate(this.timestamp).toLocaleString(

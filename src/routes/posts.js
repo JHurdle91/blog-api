@@ -17,8 +17,4 @@ const DELETE = "/:id/delete";
 const { destroy } = controller;
 router.post(DELETE, destroy.post);
 
-const app = express();
-const comments_route = require("./comments");
-app.use("/:id/comments", comments_route);
-
 module.exports = router;

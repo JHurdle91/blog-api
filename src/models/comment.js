@@ -3,12 +3,16 @@ const { DateTime } = require("luxon");
 
 const Schema = mongoose.Schema;
 
-const CommentSchema = new Schema({
-  text: { type: String, required: true },
-  timestamp: { type: Date },
-  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  post: { type: Schema.Types.ObjectId, ref: "Post", required: true },
-});
+const opts = { toJSON: { virtuals: true } };
+const CommentSchema = new Schema(
+  {
+    text: { type: String, required: true },
+    timestamp: { type: Date },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    post: { type: Schema.Types.ObjectId, ref: "Post", required: true },
+  },
+  opts
+);
 
 CommentSchema.virtual("timestamp_formatted").get(() => {
   return this.timestamp

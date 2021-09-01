@@ -3,13 +3,17 @@ const { DateTime } = require("luxon");
 
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema({
-  title: { type: String, required: true },
-  text: { type: String, required: true },
-  published: { type: Boolean, required: true },
-  timestamp: { type: Date },
-  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-});
+const opts = { toJSON: { virtuals: true } };
+const PostSchema = new Schema(
+  {
+    title: { type: String, required: true },
+    text: { type: String, required: true },
+    published: { type: Boolean, required: true },
+    timestamp: { type: Date },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  },
+  opts
+);
 
 PostSchema.virtual("url").get(() => {
   return "/posts/" + this._id;

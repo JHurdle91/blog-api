@@ -1,0 +1,3 @@
+- user auth
+- validate and sanitize inputs (see library tutorial)
+- implement json web tokens (jwt)

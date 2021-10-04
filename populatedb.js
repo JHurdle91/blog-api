@@ -8,6 +8,7 @@ console.log(
 var User = require("./src/models/user");
 var Post = require("./src/models/post");
 var Comment = require("./src/models/comment");
+var Role = require("./src/models/role");
 
 var async = require("async");
 const bcrypt = require("bcryptjs");
@@ -23,14 +24,16 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 var users = [];
 var posts = [];
 var comments = [];
+var roles = [];
 
-function userCreate(username, password, callback) {
+function userCreate(username, password, roles, callback) {
   bcrypt.hash(password, 10, (err, hashedPassword) => {
-    if (err) return next(err);
+    if (err) return err;
 
     const userDetail = {
       username,
       password: hashedPassword,
+      roles,
     };
 
     var user = new User(userDetail);
@@ -89,20 +92,33 @@ function commentCreate(text, timestamp, user, post, callback) {
   });
 }
 
+function roleCreate(name, callback) {
+  const role = new Role({ name });
+  role.save((err) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    console.log("New Role: " + role);
+    roles.push(role);
+    callback(null, role);
+  });
+}
+
 function createUsers(callback) {
   async.parallel(
     [
       (callback) => {
-        userCreate("admin", "pass", callback);
+        userCreate("admin", "pass", [roles[0]._id], callback);
       },
       (callback) => {
-        userCreate("user1", "pass1", callback);
+        userCreate("user1", "pass1", [], callback);
       },
       (callback) => {
-        userCreate("user2", "pass2", callback);
+        userCreate("user2", "pass2", [], callback);
       },
       (callback) => {
-        userCreate("user3", "pass3", callback);
+        userCreate("user3", "pass3", [], callback);
       },
     ],
     callback
@@ -116,7 +132,7 @@ function createPosts(callback) {
         postCreate(
           "This is a Title",
           "This is the body of the blog post.",
-          (published = true),
+          true,
           Date.now(),
           users[0]._id,
           callback
@@ -126,7 +142,7 @@ function createPosts(callback) {
         postCreate(
           "This is another Title",
           "This is the body of an unpublished blog post.",
-          (published = false),
+          false,
           Date.now(),
           users[1]._id,
           callback
@@ -136,7 +152,7 @@ function createPosts(callback) {
         postCreate(
           "This is Technically a Title",
           "This is technically the body of the blog post.",
-          (published = true),
+          true,
           Date.now(),
           users[0]._id,
           callback
@@ -200,7 +216,21 @@ function createComments(callback) {
   );
 }
 
-async.series([createUsers, createPosts, createComments], (err, results) => {
+function createRoles(callback) {
+  async.parallel(
+    [
+      (callback) => {
+        roleCreate("ROLE_ADMIN", callback);
+      },
+      (callback) => {
+        roleCreate("ROLE_MODERATOR", callback);
+      },
+    ],
+    callback
+  );
+}
+
+async.series([createRoles, createUsers, createPosts, createComments], (err) => {
   if (err) {
     console.log("FINAL ERR: " + err);
   } else {

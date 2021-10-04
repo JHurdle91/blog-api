@@ -41,11 +41,12 @@ app.use("/posts/:id", (req, res, next) => {
 app.use("/posts/:id/comments", routes.comments);
 app.use("/posts", routes.posts);
 app.use("/users", routes.users);
+app.use("/auth", routes.auth);
 app.use("/", routes.index);
 
 const { PORT } = process.env;
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
+  console.log(`Server is running on port ${PORT}!`);
 });
 
 module.exports = app;

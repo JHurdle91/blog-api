@@ -3,7 +3,8 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const passport = require("../auth/passport");
-var User = require("../models/user");
+const User = require("../models/user");
+const Role = require("../models/role");
 
 exports.signin = {
   post: (req, res, next) => {
@@ -23,7 +24,12 @@ exports.signin = {
         const token = jwt.sign(user.toJSON(), JWT_SECRET, {
           expiresIn: 86400, // 24 hours
         });
-        return res.json({ user, token });
+        User.findById(user._id)
+          .populate("roles", "name")
+          .exec((err, userWithRoles) => {
+            if (err) return next(err);
+            return res.json({ user: userWithRoles, token });
+          });
       });
     })(req, res);
   },

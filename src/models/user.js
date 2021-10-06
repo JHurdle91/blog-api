@@ -12,7 +12,7 @@ const UserSchema = new Schema(
   opts
 );
 
-UserSchema.virtual("url").get(() => {
+UserSchema.virtual("url").get(function () {
   return "/users/" + this._id;
 });
 

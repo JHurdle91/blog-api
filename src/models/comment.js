@@ -14,7 +14,7 @@ const CommentSchema = new Schema(
   opts
 );
 
-CommentSchema.virtual("timestamp_formatted").get(() => {
+CommentSchema.virtual("timestamp_formatted").get(function () {
   return this.timestamp
     ? DateTime.fromJSDate(this.timestamp).toLocaleString(
         DateTime.DATETIME_SHORT

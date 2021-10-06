@@ -15,11 +15,11 @@ const PostSchema = new Schema(
   opts
 );
 
-PostSchema.virtual("url").get(() => {
+PostSchema.virtual("url").get(function () {
   return "/posts/" + this._id;
 });
 
-PostSchema.virtual("timestamp_formatted").get(() => {
+PostSchema.virtual("timestamp_formatted").get(function () {
   return this.timestamp
     ? DateTime.fromJSDate(this.timestamp).toLocaleString(
         DateTime.DATETIME_SHORT

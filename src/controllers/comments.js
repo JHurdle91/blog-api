@@ -13,8 +13,19 @@ exports.index = {
 };
 
 exports.create = {
-  post: (req, res) => {
-    res.send("Not implemented: add comment to db");
+  post: (req, res, next) => {
+    console.log({ req });
+    const commentDetail = {
+      text: req.body.params.text,
+      timestamp: Date.now(),
+      user: req.body.params.userId,
+      post: req.body.params.postId,
+    };
+    const comment = new Comment(commentDetail);
+    comment.save((err) => {
+      if (err) return next(err);
+      res.redirect();
+    });
   },
 };
 

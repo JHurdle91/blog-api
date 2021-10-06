@@ -14,7 +14,6 @@ exports.index = {
 
 exports.create = {
   post: (req, res, next) => {
-    console.log({ req });
     const commentDetail = {
       text: req.body.params.text,
       timestamp: Date.now(),

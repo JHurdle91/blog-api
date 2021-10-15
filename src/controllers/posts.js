@@ -35,6 +35,32 @@ exports.update = {
   },
 };
 
+exports.published = {
+  get: (req, res, next) => {
+    // return whether post is published.
+    Post.findById(req.params.id)
+      .populate("user")
+      .exec((err, post) => {
+        if (err) return next(err);
+        res.json(post.published);
+      });
+  },
+  post: (req, res, next) => {
+    // toggle "published" property of post
+    Post.findById(req.params.id).exec((err, post) => {
+      if (err) return next(err);
+      Post.findByIdAndUpdate(
+        post._id,
+        { published: !post.published },
+        (err) => {
+          if (err) return next(err);
+          res.json();
+        }
+      );
+    });
+  },
+};
+
 exports.destroy = {
   post: (req, res) => {
     res.send("Not implemented: delete post from db");

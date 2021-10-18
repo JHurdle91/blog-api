@@ -18,7 +18,6 @@ router.get(PUBLISHED, controller.published.get);
 router.post(PUBLISHED, controller.published.post);
 
 const DELETE = "/:id/delete";
-const { destroy } = controller;
-router.post(DELETE, destroy.post);
+router.post(DELETE, controller.delete.post);
 
 module.exports = router;

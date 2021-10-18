@@ -61,8 +61,11 @@ exports.published = {
   },
 };
 
-exports.destroy = {
-  post: (req, res) => {
-    res.send("Not implemented: delete post from db");
+exports.delete = {
+  post: (req, res, next) => {
+    Post.findByIdAndRemove(req.params.id, (err) => {
+      if (err) return next(err);
+      res.json();
+    });
   },
 };

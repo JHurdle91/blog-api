@@ -40,8 +40,11 @@ exports.update = {
   },
 };
 
-exports.destroy = {
-  post: (req, res) => {
-    res.send("Not implemented: delete comment from db");
+exports.delete = {
+  post: (req, res, next) => {
+    Comment.findByIdAndRemove(req.params.commentId, (err) => {
+      if (err) return next(err);
+      res.json();
+    });
   },
 };

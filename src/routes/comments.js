@@ -14,7 +14,6 @@ const UPDATE = "/:commentId/update";
 router.post(UPDATE, controller.update.post);
 
 const DELETE = "/:commentId/delete";
-const { destroy } = controller;
-router.post(DELETE, destroy.post);
+router.post(DELETE, controller.delete.post);
 
 module.exports = router;

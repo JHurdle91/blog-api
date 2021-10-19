@@ -12,8 +12,19 @@ exports.index = {
 };
 
 exports.create = {
-  post: (req, res) => {
-    res.send("Not implemented: add post to db");
+  post: (req, res, next) => {
+    const postDetail = {
+      user: req.body.params.userId,
+      title: req.body.params.title,
+      text: req.body.params.body,
+      published: req.body.params.published,
+      timestamp: Date.now(),
+    };
+    const post = new Post(postDetail);
+    post.save((err) => {
+      if (err) return next(err);
+      res.json(post);
+    });
   },
 };
 

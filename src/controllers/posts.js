@@ -41,8 +41,22 @@ exports.id = {
 };
 
 exports.update = {
-  post: (req, res) => {
-    res.send("Not implemented: update post in db");
+  post: (req, res, next) => {
+    Post.findById(req.params.id).exec((err, post) => {
+      if (err) return next(err);
+      Post.findByIdAndUpdate(
+        post._id,
+        {
+          title: req.body.params.title,
+          text: req.body.params.body,
+          published: req.body.params.published,
+        },
+        (err) => {
+          if (err) return next(err);
+          res.json();
+        }
+      );
+    });
   },
 };
 

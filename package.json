@@ -1,6 +1,9 @@
 {
   "name": "blog-api",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.4.2"
+  },
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
